@@ -40,7 +40,8 @@ const StoreModal = () => {
     try {
       setIsLoading(true);
       const res = await axios.post('/api/stores', values);
-      toast.success('Store created.');
+
+      window.location.assign(`/${res.data.id}`);
     } catch (error) {
       console.log(error);
       toast.error('Something went wrong');
