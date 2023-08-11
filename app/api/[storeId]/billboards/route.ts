@@ -10,7 +10,7 @@ export async function POST(
     const { userId } = auth();
     const body = await req.json();
 
-    const { label, imageUrl } = body;
+    const { label, imgUrl } = body;
     const { storeId } = params;
 
     if (!userId) {
@@ -19,7 +19,7 @@ export async function POST(
     if (!label) {
       return new NextResponse('Name is required', { status: 400 });
     }
-    if (!imageUrl) {
+    if (!imgUrl) {
       return new NextResponse('ImageUrl is required', { status: 400 });
     }
 
@@ -40,7 +40,7 @@ export async function POST(
     const store = await prismadb.billboard.create({
       data: {
         label,
-        imgUrl: imageUrl,
+        imgUrl,
         storeId,
       },
     });

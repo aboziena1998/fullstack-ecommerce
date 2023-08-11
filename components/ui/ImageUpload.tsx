@@ -30,6 +30,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   if (!isMount) return null;
 
+  console.log(value);
+
   return (
     <div>
       <div className="mb-4 flex items-center gap-4">

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react/';
 import { Separator } from '@/components/ui/separator';
 import * as z from 'zod';
-import { ControllerRenderProps, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -21,8 +21,6 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import { AlertModal } from '@/components/modals/alert-modal';
-import { ApiAlert } from '@/components/ui/ApiAlert';
-import { useOrigin } from '@/hooks/use-origin';
 import ImageUpload from '@/components/ui/ImageUpload';
 
 interface billboardFormProps {
@@ -30,7 +28,7 @@ interface billboardFormProps {
 }
 const formSchema = z.object({
   label: z.string().min(1),
-  imageUrl: z.string().min(1),
+  imgUrl: z.string().min(1),
 });
 type BillboardFormValues = z.infer<typeof formSchema>;
 
@@ -39,16 +37,15 @@ const BillboardForm: React.FC<billboardFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
-  const theOrigin = useOrigin();
 
   const title = initialData ? 'Edit Billboard' : 'Create billboard';
   const description = initialData ? 'Edit a Billboard' : 'Add a new billboard';
   const toastMessage = initialData ? 'Billboard updated' : 'billboard created';
-  const action = initialData ? 'save changes' : 'Created';
+  const action = initialData ? 'save changes' : 'Create';
 
   const form = useForm<BillboardFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData || { label: '', imageUrl: '' },
+    defaultValues: initialData || { label: '', imgUrl: '' },
   });
 
   const onSubmit = async (data: BillboardFormValues) => {
@@ -75,10 +72,10 @@ const BillboardForm: React.FC<billboardFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
       const res = await axios.delete(
-        `/api/stores/${params.storeId}/billboards/${params.billboardId}`
+        `/api/${params.storeId}/billboards/${params.billboardId}`
       );
       router.refresh();
-      router.push('/');
+      router.push(`/${params.storeId}/billboards`);
       toast.success('Billboard Deleted');
     } catch (error) {
       toast.error('Make sure you removed allcategories useing this billboard');
@@ -121,12 +118,12 @@ const BillboardForm: React.FC<billboardFormProps> = ({ initialData }) => {
         >
           <FormField
             control={form.control}
-            name="imageUrl"
+            name="imgUrl"
             render={({ field }) => {
               return (
                 <FormItem>
                   <FormLabel>Background Image</FormLabel>
-                  <FormControl className="">
+                  <FormControl>
                     <ImageUpload
                       value={field.value ? [field.value] : []}
                       disabled={loading}
