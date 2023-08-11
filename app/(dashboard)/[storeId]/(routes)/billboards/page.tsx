@@ -22,7 +22,7 @@ const Billboards = async ({ params }: { params: { storeId: string } }) => {
     createdAt: format(item.createdAt, 'MMM do, yyyy'),
   }));
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col px-4 ">
       <div className="flex-1 space-y-8 pt-6">
         <BillboardClient data={formattedBillboards} />
       </div>

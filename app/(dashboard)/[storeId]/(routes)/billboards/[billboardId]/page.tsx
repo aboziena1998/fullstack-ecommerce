@@ -9,8 +9,8 @@ const page = async ({ params }: { params: { billboardId: string } }) => {
     },
   });
   return (
-    <div className="flex flex-col">
-      <div className="flex-1 space-x-4 p-8 pt-6">
+    <div className="flex flex-col px-4">
+      <div className="flex-1 space-x-8 p-8 pt-6">
         <BillboardForm initialData={billboard} />
       </div>
     </div>
