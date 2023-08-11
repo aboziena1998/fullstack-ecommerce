@@ -37,7 +37,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
+  const theOrigin = useOrigin();
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
@@ -126,7 +126,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         <Separator />
         <ApiAlert
           title="NEXT_PUBLIC_API_URL"
-          description={`${origin}/api/${params.storeId}`}
+          description={`${theOrigin}/api/${params.storeId}`}
           variant="public"
         />
       </Form>
