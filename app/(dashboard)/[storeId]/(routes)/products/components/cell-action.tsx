@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { ColorColumn } from './Columns';
+import { ProductColumn } from './Columns';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +17,7 @@ import axios from 'axios';
 import { AlertModal } from '@/components/modals/alert-modal';
 
 interface CellActionProps {
-  data: ColorColumn;
+  data: ProductColumn;
 }
 
 const CellAction: FC<CellActionProps> = ({ data }) => {
@@ -25,7 +25,7 @@ const CellAction: FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success('Color id copied to clipboard');
+    toast.success('Product id copied to clipboard');
   };
 
   const [loading, setLoading] = useState(false);
@@ -35,12 +35,12 @@ const CellAction: FC<CellActionProps> = ({ data }) => {
     try {
       setLoading(true);
       const res = await axios.delete(
-        `/api/${params.storeId}/colors/${data.id}`
+        `/api/${params.storeId}/products/${data.id}`
       );
       router.refresh();
-      toast.success('Color Deleted');
+      toast.success('Product Deleted');
     } catch (error) {
-      toast.error('Make sure you removed all products useing this color');
+      toast.error('Make sure you removed allcategories useing this product');
     } finally {
       setLoading(false);
       setOpen(false);
@@ -65,7 +65,7 @@ const CellAction: FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() => {
-              router.push(`/${params.storeId}/colors/${data.id}`);
+              router.push(`/${params.storeId}/products/${data.id}`);
             }}
           >
             <Edit className="mr-2 h-4 w-4" />
