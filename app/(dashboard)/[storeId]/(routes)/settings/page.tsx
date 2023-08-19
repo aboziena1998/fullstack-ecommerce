@@ -23,6 +23,8 @@ const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
       userId,
     },
   });
+
+  console.log(store);
   if (!store) redirect('/');
 
   return (

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react/';
 import { Separator } from '@/components/ui/separator';
 import * as z from 'zod';
-import { ControllerRenderProps, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
@@ -27,9 +27,11 @@ import { useOrigin } from '@/hooks/use-origin';
 interface SettingsFormProps {
   initialData: Store;
 }
+
 const formSchema = z.object({
   name: z.string().min(1),
 });
+
 type SettingsFormValues = z.infer<typeof formSchema>;
 
 const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
@@ -46,7 +48,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const onSubmit = async (data: SettingsFormValues) => {
     try {
       setLoading(true);
-      const res = axios.patch(`/api/stores/${params.storeId}`, data);
+      const res = await axios.patch(`/api/stores/${params.storeId}`, data);
       router.refresh();
       toast.success('store updated');
     } catch (error) {
@@ -58,7 +60,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      const res = axios.delete(`/api/stores/${params.storeId}`);
+      const res = await axios.delete(`/api/stores/${params.storeId}`);
       router.refresh();
       router.push('/');
       toast.success('Store Deleted');

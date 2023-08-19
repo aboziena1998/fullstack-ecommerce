@@ -32,11 +32,10 @@ export async function PATCH(
     if (!userId) return new NextResponse('Unauthenticated', { status: 401 });
 
     const body = await req.json();
-    const { label, imageUrl } = body;
+    const { label, imgUrl } = body;
 
     if (!label) return new NextResponse('Label is required', { status: 400 });
-    if (!imageUrl)
-      return new NextResponse('ImageUrl is required', { status: 400 });
+    if (!imgUrl) return new NextResponse('ImgUrl is required', { status: 400 });
 
     if (!params.billboardId)
       return new NextResponse('Billboard  id is required', { status: 400 });
@@ -48,6 +47,7 @@ export async function PATCH(
       },
     });
 
+    console.log('billboard');
     if (!storeByUserId) {
       return new NextResponse('Unauthorized', { status: 403 });
     }
@@ -58,7 +58,7 @@ export async function PATCH(
       },
       data: {
         label,
-        imgUrl: imageUrl,
+        imgUrl,
       },
     });
     console.log(billboard);
